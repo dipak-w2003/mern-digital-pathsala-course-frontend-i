@@ -1,16 +1,50 @@
-# React + Vite
+## 📦 Axios Setup in React
+🔍 What is Axios?
+Axios is a promise-based HTTP client used to make GET, POST, PUT, DELETE requests from a frontend (like React) to a backend (like Express API).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Installation
+```bash
+npm install axios
+```
 
-Currently, two official plugins are available:
+📄 Basic Usage
+```js
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+function App() {
+  const [data, setData] = useState([]);
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/books')
+      .then(res => setData(res.data))
+      .catch(err => console.error(err));
+  }, []);
 
-## Expanding the ESLint configuration
+  return (
+    <div>
+      <h1>Books</h1>
+      {data.map(book => (
+        <div key={book.id}>{book.name} - ${book.price}</div>
+      ))}
+    </div>
+  );
+}
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+export default App;
+```
 
+✍️ POST Example
+```js
+axios.post('http://localhost:5000/api/books', {
+  name: 'New Book',
+  price: 300
+});
+```
+### 📌 Tips
+- Axios automatically parses JSON.
+You can set a base URL for cleaner code using axios.create().
 
-
-
+```js
+const api = axios.create({baseURL: 'http://localhost:5000/api'});
+api.get('/books').then(...);
+```
