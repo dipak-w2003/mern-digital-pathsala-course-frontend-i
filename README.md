@@ -47,4 +47,4 @@ You can set a base URL for cleaner code using axios.create().
 ```js
 const api = axios.create({baseURL: 'http://localhost:5000/api'});
 api.get('/books').then(...);
-```
+```gi
